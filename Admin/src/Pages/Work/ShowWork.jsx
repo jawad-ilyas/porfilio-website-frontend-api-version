@@ -3,8 +3,11 @@ import axios from "axios"
 import swal from 'sweetalert';
 import { ShowWorkData } from '../../Api/FetchWork.api.js';
 import Model from '../../Components/Model/Model.jsx';
-
+import { useDispatch, useSelector } from "react-redux"
+import { openCloseModel } from '../../features/model/modelSlice.jsx';
 function ShowWork() {
+
+    const isModelOpen = useSelector(state => state.isModelState);
 
 
     const [showData, setShowData] = useState()
@@ -12,7 +15,7 @@ function ShowWork() {
     const [showModel, setShowModel] = useState(false)
     const [updateData, setUpdateData] = useState({});
 
-    // console.log("showData into showWork.jsx",showData)
+    console.log("showModel into showWork.jsx", showModel)
     // handle delete
 
     const deleteSweetAlert = (key) => {
@@ -49,71 +52,75 @@ function ShowWork() {
             console.log("error into delete")
         })
     }
+    const dispatch = useDispatch();
+
     const handleUpdate = (key, name, description, avatar) => {
 
         setUpdateData({ name, key, description, avatar })
-
-
-
         setShowModel(true)
-       
+
+
+        // Dispatch action and access state
+        dispatch(openCloseModel({ id: 1, isModelOpen: true }));
+
+
+    }
+    console.log("isModelOpen:", isModelOpen); // Optional, only if needed within the component
+
+
+    const handleOnclose = () => {
+        setShowModel(false)
     }
 
-
-
-
-    useEffect(() => {
-        ; ((async () => {
-            const { data, loading } = await ShowWorkData();
-            console.log(data)
-            setIsloading(loading)
-            setShowData(data)
-        })())
-
-    }, [])
+    // Function to fetch updated data after insertion
+     const fetchUpdatedData = async () => {
+        const { data, loading } = await ShowWorkData();
+        setIsloading(loading);
+        setShowData(data);
+    }
 
     return (
         <div className='relative'>
             {showModel && <Model modelValue={true} name={updateData.name} description={updateData.description} avatar={updateData.avatar}
-
+                onClose={handleOnclose}
                 _id={updateData.key}
 
             />}
 
             {
-                isloading == true ? <div class="border border-blue-300 shadow rounded-md p-4  w-full mx-auto">
-                    <div class="animate-pulse flex space-x-4">
-                        <div class="rounded-full bg-slate-700 h-10 w-10"></div>
-                        <div class="flex-1 space-y-6 py-1">
-                            <div class="h-2 bg-slate-700 rounded"></div>
-                            <div class="space-y-3">
-                                <div class="grid grid-cols-3 gap-4">
-                                    <div class="h-2 bg-slate-700 rounded col-span-2"></div>
-                                    <div class="h-2 bg-slate-700 rounded col-span-1"></div>
+                isloading == true ? <div className="border border-blue-300 shadow rounded-md p-4  w-full mx-auto">
+                    <div className="animate-pulse flex space-x-4">
+                        <div className="rounded-full bg-slate-700 h-10 w-10"></div>
+                        <div className="flex-1 space-y-6 py-1">
+                            <div className="h-2 bg-slate-700 rounded"></div>
+                            <div className="space-y-3">
+                                <div className="grid grid-cols-3 gap-4">
+                                    <div className="h-2 bg-slate-700 rounded col-span-2"></div>
+                                    <div className="h-2 bg-slate-700 rounded col-span-1"></div>
                                 </div>
-                                <div class="h-2 bg-slate-700 rounded"></div>
+                                <div className="h-2 bg-slate-700 rounded"></div>
                             </div>
 
                         </div>
-                        <div class="flex-1 space-y-6 py-1">
-                            <div class="h-2 bg-slate-700 rounded"></div>
-                            <div class="space-y-3">
-                                <div class="grid grid-cols-3 gap-4">
-                                    <div class="h-2 bg-slate-700 rounded col-span-2"></div>
-                                    <div class="h-2 bg-slate-700 rounded col-span-1"></div>
+                        <div className="flex-1 space-y-6 py-1">
+                            <div className="h-2 bg-slate-700 rounded"></div>
+                            <div className="space-y-3">
+                                <div className="grid grid-cols-3 gap-4">
+                                    <div className="h-2 bg-slate-700 rounded col-span-2"></div>
+                                    <div className="h-2 bg-slate-700 rounded col-span-1"></div>
                                 </div>
-                                <div class="h-2 bg-slate-700 rounded"></div>
+                                <div className="h-2 bg-slate-700 rounded"></div>
                             </div>
 
                         </div>
-                        <div class="flex-1 space-y-6 py-1">
-                            <div class="h-2 bg-slate-700 rounded"></div>
-                            <div class="space-y-3">
-                                <div class="grid grid-cols-3 gap-4">
-                                    <div class="h-2 bg-slate-700 rounded col-span-2"></div>
-                                    <div class="h-2 bg-slate-700 rounded col-span-1"></div>
+                        <div className="flex-1 space-y-6 py-1">
+                            <div className="h-2 bg-slate-700 rounded"></div>
+                            <div className="space-y-3">
+                                <div className="grid grid-cols-3 gap-4">
+                                    <div className="h-2 bg-slate-700 rounded col-span-2"></div>
+                                    <div className="h-2 bg-slate-700 rounded col-span-1"></div>
                                 </div>
-                                <div class="h-2 bg-slate-700 rounded"></div>
+                                <div className="h-2 bg-slate-700 rounded"></div>
                             </div>
 
                         </div>

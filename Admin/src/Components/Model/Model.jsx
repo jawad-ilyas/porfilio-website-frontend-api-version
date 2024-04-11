@@ -2,12 +2,16 @@ import React from 'react';
 import { useState } from 'react';
 import { useForm } from "react-hook-form"
 import { IoIosCloseCircle } from "react-icons/io";
+import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
-function Model({ modelValue,name, description, avatar, _id }) {
+import { openCloseModel } from '../../features/model/modelSlice';
+function Model({ modelValue, name, description, avatar, _id, onClose }) {
     const [image, setImage] = useState(null);
+    const isModelOpen = useSelector(state => state.isModelState)
+    console.log("isModelOpen   : ", isModelOpen)
     // Function to handle image upload
     const [showModel, setShowModel] = useState(modelValue)
-
+    const dispatch = useDispatch();
     const handleImageUpload = (event) => {
         const file = event.target.files[0]; // Get the uploaded file
         // Check if the uploaded file is valid
@@ -76,13 +80,13 @@ function Model({ modelValue,name, description, avatar, _id }) {
         setShowModel(false)
     }
     return (
-          <div className='fixed left-0 top-0 w-full h-full flex items-center justify-center  z-[90]'>
+        <div className='fixed left-0 top-0 w-full h-full flex items-center justify-center  z-[90]'>
             <div className='absolute inset-0 bg-black opacity-25'></div>
             <div className='bg-white w-11/12 md:max-w-md z-[100] p-4 rounded-xl'>
                 <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col  gap-y-5' >
                     <div className='flex  items-center justify-between'>
                         <h2 className='text-center font-semibold text-xl my-3'>Update  Work</h2>
-                        <IoIosCloseCircle size={30} className='hover:text-red-600 cursor-pointer' />
+                        <IoIosCloseCircle onClick={onClose} size={30} className='hover:text-red-600 cursor-pointer' />
 
                     </div>
 

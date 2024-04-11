@@ -16,7 +16,8 @@ import Projects from './Pages/Projects/Projects.jsx';
 import ShowCase from './Pages/Showcase/ShowCase.jsx';
 import Skills from './Pages/Skills/Skills.jsx';
 import Review from './Pages/Testimonials/Review.jsx';
-
+import { Provider } from "react-redux"
+import { store } from './Store/store.js';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -32,7 +33,10 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+
+      <RouterProvider router={router} />
+    </Provider>
 
 
   </React.StrictMode>,
