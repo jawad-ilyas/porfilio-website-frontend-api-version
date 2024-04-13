@@ -8,12 +8,12 @@ import { GrProjects } from "react-icons/gr";
 import { VscTools } from "react-icons/vsc";
 import { RiSlideshow3Line } from "react-icons/ri";
 import './Navbar.js'
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 const iconArray = [
     {
         name: "Work",
         icon: <MdOutlineWorkOutline />,
-        link: "/work"
+        link: "/"
     },
     {
         name: "Contact",
@@ -84,7 +84,12 @@ function Navbar() {
                         {iconArray.map((items, index) => (
                             <div key={index} className='flex items-center hover:bg-gray-200 cursor-pointer px-2 py-1 rounded-sm  me-4 flex-wrap gap-x-2 ' >
                                 <p className='text-xl '> {items.icon} </p>
-                                <Link to={items.link} className='text-md font-normal '>{items.name}</Link>
+                                <NavLink to={items.link} className={({ isActive, isPending }) => {
+                                    return isActive ? "bg-gray-200" :  "";
+                                }}>
+                                    {items.name}
+                                </NavLink>
+
                         
                             </div>
                         ))}
