@@ -2,7 +2,7 @@ import axios from "axios";
 
 const fetchProjectCategory = async () => {
     try {
-        const response = await axios.get("http://localhost:8080/api/v1/projectCategory/showProjectCategrory");
+        const response = await axios.get("https://jawadmughaldev.vercel.app//api/v1/projectCategory/showProjectCategrory");
 
         // Log the response data or return it as needed
         console.log(response.data);
@@ -20,7 +20,7 @@ const fetchProjectCategory = async () => {
 const fetchProjects = async () => {
 
     try {
-        return await axios.get("http://localhost:8080/api/v1/project/fetchProjects")
+        return await axios.get("https://jawadmughaldev.vercel.app//api/v1/project/fetchProjects")
             .then((response) => {
 
                 console.log("response of the fetch projects ", response?.data)
