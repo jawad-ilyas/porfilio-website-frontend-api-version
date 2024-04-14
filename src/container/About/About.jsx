@@ -12,7 +12,7 @@ const About = () => {
   const fetchAboutData = () => {
 
 
-    axios.get("https://jawadmughaldev.vercel.app//api/v1/work/showWork")
+    axios.get("https://porfilio-website-frontend-api-backend-ui1y.vercel.app/api/v1/work/showWork")
       .then((response) => {
         console.log("fetch data into main for about section ", response)
         console.log("fetch data into main for about section ", response.data.data)
