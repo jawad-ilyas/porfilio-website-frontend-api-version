@@ -6,6 +6,7 @@ import urlFor, { client } from '../../client'
 // import ReactToolTip from "react-tooltip"
 import { Tooltip as ReactTooltip } from 'react-tooltip'
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi"
+import { fetchReview } from './Testimonail.api'
 function Testimonail() {
   const [brands, setBrands] = useState([])
   const [testimonials, setTestimonials] = useState([])
@@ -13,7 +14,16 @@ function Testimonail() {
   const handleClick = (index) => {
     setCurrentIndex(index);
   };
+
+  const fetchReviewFun = async () => {
+    const review = await fetchReview();
+    console.log('Fetch Review Function ', review)
+    setTestimonials(review)
+  }
   useEffect(() => {
+
+
+
 
     const query = '*[_type == "testimonials"]';
     const brandQuery = '*[_type == "brands"]';
@@ -24,21 +34,21 @@ function Testimonail() {
         setBrands(data)
       })
 
-    client.fetch(query)
-      .then((data) => {
-        console.log(data)
-        setTestimonials(data)
-      })
-
+    // client.fetch(query)
+    //   .then((data) => {
+    //     console.log(data)
+    //     setTestimonials(data)
+    //   })
+    fetchReviewFun();
   }, [])
   return (
     <div className='container md:mx-auto  sm:px-10 sm:py-8 p-4 '>
       {testimonials.length && (
-        <div className=' flex justify-center flex-col items-center p-8 '>
+        <div key={testimonials[currentIndex].name} className=' flex justify-center flex-col items-center p-8 '>
           <div className="flex bg-white flex-col  md:flex-row  rounded-2xl shadow-xl p-8 md:w-4/6 h">
-            <img className='self-center me-4 w-1/2 h-1/2 md:w-48 md:h-48 object-contain rounded-full' src={urlFor(testimonials[currentIndex].imageurl)} alt={testimonials[currentIndex].name} />
+            <img className='self-center me-4 w-1/2 h-1/2 md:w-48 md:h-48 object-contain rounded-full' src={testimonials[currentIndex].reviewImage} alt={testimonials[currentIndex].name} />
             <div className="">
-              <p className="p-text">{testimonials[currentIndex].feedback}</p>
+              <p className="p-text">{testimonials[currentIndex].description}</p>
               <div className='mt-4'>
                 <h4 className="font-bold text-xl capitalize">{testimonials[currentIndex].name}</h4>
                 <h5 className="p-text font-normal italic text-base">{testimonials[currentIndex].company}</h5>
@@ -57,7 +67,7 @@ function Testimonail() {
           </div>
         </div>
       )}
-      <div className="flex flex-row justify-center flex-wrap ">
+      {/* <div className="flex flex-row justify-center flex-wrap ">
         {brands.map((brand) => (
           <motion.div
             whileInView={{ opacity: [0, 1] }}
@@ -68,7 +78,7 @@ function Testimonail() {
             <img className='w-32 h-32 object-contain grayscale ' src={urlFor(brand.imgUrl)} alt={brand.name} />
           </motion.div>
         ))}
-      </div>
+      </div> */}
     </div>
   )
 }

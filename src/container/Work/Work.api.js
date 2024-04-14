@@ -1,19 +1,39 @@
-import axios from "axios"
+import axios from "axios";
 
-const fetchProductCategory = async () => {
+const fetchProjectCategory = async () => {
+    try {
+        const response = await axios.get("http://localhost:8080/api/v1/projectCategory/showProjectCategrory");
+
+        // Log the response data or return it as needed
+        console.log(response.data);
+        return response.data;
+
+    } catch (error) {
+        // Handle errors
+        console.log("Error fetching product category:", error);
+        throw error; // Re-throw the error or handle it as needed
+    }
+};
+
+
+// ! fetch projects 
+const fetchProjects = async () => {
 
     try {
-
-        return axios.get("http://localhost:8080/api/v1/projectCategory/showProjectCategrory")
+        return await axios.get("http://localhost:8080/api/v1/project/fetchProjects")
             .then((response) => {
-                console.log(response)
-            }).catch((error) => {
-                console.log(error)
+
+                console.log("response of the fetch projects ", response?.data)
+                return response.data;
+
+            })
+            .catch((error) => {
+                console.log("error into fetch project ", error)
             })
     } catch (error) {
-        console.log("Error into fetch api into product category", error)
-    }
 
+        console.log("error into fetch project ", error)
+    }
 }
 
-export { fetchProductCategory }
+export { fetchProjectCategory, fetchProjects };
