@@ -15,4 +15,25 @@ const fetchProjectCategory = async () => {
     }
 };
 
-export { fetchProjectCategory };
+
+// ! fetch projects 
+const fetchProjects = async () => {
+
+    try {
+        return await axios.get("http://localhost:8080/api/v1/project/fetchProjects")
+            .then((response) => {
+
+                console.log("response of the fetch projects ", response?.data)
+                return response.data;
+
+            })
+            .catch((error) => {
+                console.log("error into fetch project ", error)
+            })
+    } catch (error) {
+
+        console.log("error into fetch project ", error)
+    }
+}
+
+export { fetchProjectCategory, fetchProjects };

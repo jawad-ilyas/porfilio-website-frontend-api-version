@@ -6,6 +6,7 @@ import urlFor, { client } from '../../client'
 // import ReactToolTip from "react-tooltip"
 import { Tooltip as ReactTooltip } from 'react-tooltip'
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi"
+import { fetchReview } from './Testimonail.api'
 function Testimonail() {
   const [brands, setBrands] = useState([])
   const [testimonials, setTestimonials] = useState([])
@@ -13,7 +14,15 @@ function Testimonail() {
   const handleClick = (index) => {
     setCurrentIndex(index);
   };
+
+  const fetchReviewFun = async () => {
+    const review = fetchReview();
+    console.log('Fetch Review Function ', review)
+  }
   useEffect(() => {
+
+
+
 
     const query = '*[_type == "testimonials"]';
     const brandQuery = '*[_type == "brands"]';
@@ -29,7 +38,7 @@ function Testimonail() {
         console.log(data)
         setTestimonials(data)
       })
-
+    fetchReviewFun();
   }, [])
   return (
     <div className='container md:mx-auto  sm:px-10 sm:py-8 p-4 '>
