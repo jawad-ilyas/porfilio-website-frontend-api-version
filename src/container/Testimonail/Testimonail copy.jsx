@@ -18,7 +18,6 @@ function Testimonail() {
   const fetchReviewFun = async () => {
     const review = await fetchReview();
     console.log('Fetch Review Function ', review)
-    setTestimonials(review)
   }
   useEffect(() => {
 
@@ -34,21 +33,21 @@ function Testimonail() {
         setBrands(data)
       })
 
-    // client.fetch(query)
-    //   .then((data) => {
-    //     console.log(data)
-    //     setTestimonials(data)
-    //   })
+    client.fetch(query)
+      .then((data) => {
+        console.log(data)
+        setTestimonials(data)
+      })
     fetchReviewFun();
   }, [])
   return (
     <div className='container md:mx-auto  sm:px-10 sm:py-8 p-4 '>
       {testimonials.length && (
-        <div key={testimonials[currentIndex].name} className=' flex justify-center flex-col items-center p-8 '>
+        <div className=' flex justify-center flex-col items-center p-8 '>
           <div className="flex bg-white flex-col  md:flex-row  rounded-2xl shadow-xl p-8 md:w-4/6 h">
-            <img className='self-center me-4 w-1/2 h-1/2 md:w-48 md:h-48 object-contain rounded-full' src={testimonials[currentIndex].reviewImage} alt={testimonials[currentIndex].name} />
+            <img className='self-center me-4 w-1/2 h-1/2 md:w-48 md:h-48 object-contain rounded-full' src={urlFor(testimonials[currentIndex].imageurl)} alt={testimonials[currentIndex].name} />
             <div className="">
-              <p className="p-text">{testimonials[currentIndex].description}</p>
+              <p className="p-text">{testimonials[currentIndex].feedback}</p>
               <div className='mt-4'>
                 <h4 className="font-bold text-xl capitalize">{testimonials[currentIndex].name}</h4>
                 <h5 className="p-text font-normal italic text-base">{testimonials[currentIndex].company}</h5>
@@ -67,7 +66,7 @@ function Testimonail() {
           </div>
         </div>
       )}
-      {/* <div className="flex flex-row justify-center flex-wrap ">
+      <div className="flex flex-row justify-center flex-wrap ">
         {brands.map((brand) => (
           <motion.div
             whileInView={{ opacity: [0, 1] }}
@@ -78,7 +77,7 @@ function Testimonail() {
             <img className='w-32 h-32 object-contain grayscale ' src={urlFor(brand.imgUrl)} alt={brand.name} />
           </motion.div>
         ))}
-      </div> */}
+      </div>
     </div>
   )
 }
